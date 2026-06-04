@@ -17,7 +17,7 @@ class CipherFacade:
         return result
 
     def decrypt(self, text: str, rot_type: RotType) -> Text:
-        result - self._cipher.decrypt(text, rot_type)
+        result = self._cipher.decrypt(text, rot_type)
         self._buffer.add(result)
         return result
 
