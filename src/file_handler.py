@@ -12,8 +12,8 @@ class FileHandler:
             with open(path, "r", encoding="utf-8") as f:
                 existing = json.load(f)
 
-            new_items = [self._serialize(item) for item in items]
-            existing.extend(new_items)
+        new_items = [self._serialize(item) for item in items]
+        existing.extend(new_items)
 
         with open(path, "w", encoding="utf-8") as f:
                 json.dump(existing, f, indent=2, ensure_ascii=False)
