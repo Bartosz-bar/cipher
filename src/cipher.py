@@ -34,4 +34,4 @@ class Cipher:
                 result.append(chr((ord(char) - ord('!') + 47) % 94 + ord('!')))
             else:
                 result.append(char)
-            return ''.join(result)
+        return ''.join(result)
