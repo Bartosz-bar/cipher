@@ -1,23 +1,26 @@
-from unittest import result
-
 from src.buffer import Buffer
 from src.cipher import Cipher
 from src.file_handler import FileHandler
 from src.models import Text, RotType, TextStatus
 
 class CipherFacade:
-    def __init__(self) -> None:
-        self._cipher = Cipher()
+
+    def __init__(self, ciphers: dict[RotType, Cipher]) -> None:
+        self._ciphers = ciphers
         self._buffer = Buffer()
         self._file_handler = FileHandler()
 
     def encrypt(self, text: str, rot_type: RotType) -> Text:
-        result = self._cipher.encrypt(text, rot_type)
+        cipher = self._ciphers.get(rot_type)
+        encrypted_text = cipher.encrypt(text)
+        result = Text(text=encrypted_text, rot_type=rot_type, status=TextStatus.ENCRYPTED)
         self._buffer.add(result)
         return result
 
     def decrypt(self, text: str, rot_type: RotType) -> Text:
-        result = self._cipher.decrypt(text, rot_type)
+        cipher = self._ciphers.get(rot_type)
+        decrypted_text = cipher.decrypt(text)
+        result = Text(text=decrypted_text, rot_type=rot_type, status=TextStatus.DECRYPTED)
         self._buffer.add(result)
         return result
 

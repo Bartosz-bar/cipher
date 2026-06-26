@@ -1,22 +1,26 @@
-from src.models import Text, RotType, TextStatus
+from abc import ABC, abstractmethod
 
-class Cipher:
+from src.models import TextStatus
 
-    def encrypt(self, text: str, rot_type: RotType) -> Text:
-        encrypted = self._rotate(text, rot_type)
-        return Text(text=encrypted, rot_type=rot_type, status=TextStatus.ENCRYPTED)
 
-    def decrypt(self, text: str, rot_type: RotType) -> Text:
-        decrypted = self._rotate(text, rot_type)
-        return Text(text=decrypted, rot_type=rot_type, status=TextStatus.DECRYPTED)
+class Cipher(ABC):
+    @abstractmethod
+    def encrypt(self, text: str) -> str:
+        pass
 
-    def _rotate(self, text: str, rot_type: RotType) -> str:
-        if rot_type == RotType.ROT13:
-            return self._rot13(text)
-        return self._rot47(text)
+    @abstractmethod
+    def decrypt(self, text: str) -> str:
+        pass
 
-    def _rot13(self, text: str) -> str:
+    @abstractmethod
+    def _rotate(self, text: str) -> str:
+        pass
+
+class Rot13Cipher(Cipher):
+
+    def _rotate(self, text: str) -> str:
         result = []
+
         for char in text:
             if 'a' <= char <= 'z':
                 result.append(chr((ord(char) - ord('a') + 13) % 26 + ord('a')))
@@ -26,7 +30,17 @@ class Cipher:
                 result.append(char)
         return ''.join(result)
 
-    def _rot47(self, text: str) -> str:
+
+    def encrypt(self, text: str) -> str:
+        return self._rotate(text)
+
+    def decrypt(self, text: str) -> str:
+        return self._rotate(text)
+
+class Rot47Cipher(Cipher):
+
+
+    def _rotate(self, text: str) -> str:
         result = []
 
         for char in text:
@@ -35,3 +49,10 @@ class Cipher:
             else:
                 result.append(char)
         return ''.join(result)
+
+    def encrypt(self, text: str) -> str:
+        return self._rotate(text)
+
+    def decrypt(self, text: str) -> str:
+        return self._rotate(text)
+

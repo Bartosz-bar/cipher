@@ -1,9 +1,14 @@
+from src.cipher import Rot47Cipher, Rot13Cipher
 from src.cipher_facade import CipherFacade
 from src.models import RotType
 
 class Manager:
     def __init__(self) -> None:
-        self._facade = CipherFacade()
+        ciphers = {
+            RotType.ROT13: Rot13Cipher(),
+            RotType.ROT47: Rot47Cipher(),
+        }
+        self._facade = CipherFacade(ciphers=ciphers)
 
     def run(self) -> None:
         print("Welcome to CIPHER!")

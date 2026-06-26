@@ -1,38 +1,30 @@
-import pytest
-from src.cipher import Cipher
-from src.models import RotType, TextStatus
+from src.cipher import Rot13Cipher, Rot47Cipher
 
-class TestCipher:
+class TestRot13Cipher:
 
     def setup_method(self) -> None:
-        self.cipher = Cipher()
+        self.cipher = Rot13Cipher()
 
-    def test_encrypt_rot13_returns_correct_text(self) -> None:
-        result = self.cipher.encrypt("hello", RotType.ROT13)
-        assert result.text == "uryyb"
+    def test_encrypt_returns_correct_text(self) -> None:
+        assert self.cipher.encrypt("hello") == "uryyb"
 
-    def test_encrypt_rot13_returns_encrypted_text(self) -> None:
-        result = self.cipher.encrypt("hello", RotType.ROT13)
-        assert result.status == TextStatus.ENCRYPTED
+    def test_decrypt_returns_original_text(self) -> None:
+        assert self.cipher.decrypt("uryyb") == "hello"
 
-    def test_decrypt_rot13_returns_original_text(self) -> None:
-        result = self.cipher.decrypt("uryyb", RotType.ROT13)
-        assert result.text == "hello"
+    def test_is_symmetric(self) -> None:
+        encrypted = self.cipher.encrypt("hello")
+        decrypted = self.cipher.decrypt(encrypted)
+        assert decrypted == "hello"
 
-    def test_decrypt_rot13_returns_decrypted_status(self) -> None:
-        result = self.cipher.decrypt("uryyb", RotType.ROT13)
-        assert result.status == TextStatus.DECRYPTED
+    def test_ignore_non_alpha(self) -> None:
+        assert self.cipher.encrypt("hello 123!") == "uryyb 123!"
 
-    def test_rot13_is_symmetric(self) -> None:
-        encrypted = self.cipher.encrypt("hello",RotType.ROT13)
-        decrypted = self.cipher.decrypt(encrypted.text, RotType.ROT13)
-        assert decrypted.text == "hello"
+class TestRot47Cipher:
 
-    def test_rot47_is_symmetric(self) -> None:
-        encrypted = self.cipher.encrypt("hello!",RotType.ROT47)
-        decrypted = self.cipher.decrypt(encrypted.text, RotType.ROT47)
-        assert decrypted.text == "hello!"
+    def setup_method(self) -> None:
+        self.cipher = Rot47Cipher()
 
-    def test_encrypt_rot13_ignores_non_alpha(self) -> None:
-        result = self.cipher.encrypt("hello 123!", RotType.ROT13)
-        assert result.text == "uryyb 123!"
+    def test_is_symmetric(self) -> None:
+        encrypted = self.cipher.encrypt("hello!")
+        decrypted = self.cipher.decrypt(encrypted)
+        assert decrypted == "hello!"
