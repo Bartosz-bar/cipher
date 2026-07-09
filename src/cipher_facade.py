@@ -5,10 +5,10 @@ from src.models import Text, RotType, TextStatus
 
 class CipherFacade:
 
-    def __init__(self, ciphers: dict[RotType, Cipher]) -> None:
+    def __init__(self, ciphers: dict[RotType, Cipher], buffer, file_handler) -> None:
         self._ciphers = ciphers
-        self._buffer = Buffer()
-        self._file_handler = FileHandler()
+        self._buffer = buffer
+        self._file_handler = file_handler
 
     def encrypt(self, text: str, rot_type: RotType) -> Text:
         cipher = self._ciphers.get(rot_type)
