@@ -1,6 +1,6 @@
 import pytest
 from src.file_handler import FileHandler
-from src.cipher import Cipher
+from src.cipher000 import Cipher
 from src.models import RotType, TextStatus
 
 class TestFileHandler:

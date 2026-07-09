@@ -1,5 +1,5 @@
 from src.buffer import Buffer
-from src.cipher import Cipher
+from src.cipher000 import Cipher
 from src.models import RotType, TextStatus
 
 class TestBuffer:
