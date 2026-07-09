@@ -1,7 +1,10 @@
 from src.manager import Manager
+from src.buffer import Buffer
+from src.file_handler import FileHandler
+
 
 def main() -> None:
-    manager = Manager()
+    manager = Manager(buffer=Buffer(), file_handler=FileHandler())
     manager.run()
 
 if __name__ == "__main__":
