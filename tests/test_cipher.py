@@ -1,7 +1,7 @@
 from src.cipher import Rot13Cipher, Rot47Cipher
 
-class TestRot13Cipher:
 
+class TestRot13Cipher:
     def setup_method(self) -> None:
         self.cipher = Rot13Cipher()
 
@@ -19,8 +19,8 @@ class TestRot13Cipher:
     def test_ignore_non_alpha(self) -> None:
         assert self.cipher.encrypt("hello 123!") == "uryyb 123!"
 
-class TestRot47Cipher:
 
+class TestRot47Cipher:
     def setup_method(self) -> None:
         self.cipher = Rot47Cipher()
 

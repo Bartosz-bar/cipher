@@ -1,5 +1,6 @@
 from src.models import Text
 
+
 class Buffer:
     def __init__(self) -> None:
         self.items: list[Text] = []

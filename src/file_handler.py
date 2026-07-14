@@ -1,10 +1,11 @@
 import json
 from pathlib import Path
-from src.models import Text, RotType, TextStatus
+
+from src.models import RotType, Text, TextStatus
+
 
 class FileHandler:
-
-    def save(self, filename:str, items: list[Text]) -> None:
+    def save(self, filename: str, items: list[Text]) -> None:
         path = Path(filename)
         existing = []
 
@@ -16,7 +17,7 @@ class FileHandler:
         existing.extend(new_items)
 
         with open(path, "w", encoding="utf-8") as f:
-                json.dump(existing, f, indent=2, ensure_ascii=False)
+            json.dump(existing, f, indent=2, ensure_ascii=False)
 
     def load(self, filename: str) -> list[Text]:
         path = Path(filename)

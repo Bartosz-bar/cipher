@@ -1,11 +1,13 @@
 from src.buffer import Buffer
 from src.cipher import Cipher
 from src.file_handler import FileHandler
-from src.models import Text, RotType, TextStatus
+from src.models import RotType, Text, TextStatus
+
 
 class CipherFacade:
-
-    def __init__(self, ciphers: dict[RotType, Cipher], buffer, file_handler) -> None:
+    def __init__(
+        self, ciphers: dict[RotType, Cipher], buffer: Buffer, file_handler: FileHandler
+    ) -> None:
         self._ciphers = ciphers
         self._buffer = buffer
         self._file_handler = file_handler
@@ -13,14 +15,18 @@ class CipherFacade:
     def encrypt(self, text: str, rot_type: RotType) -> Text:
         cipher = self._ciphers.get(rot_type)
         encrypted_text = cipher.encrypt(text)
-        result = Text(text=encrypted_text, rot_type=rot_type, status=TextStatus.ENCRYPTED)
+        result = Text(
+            text=encrypted_text, rot_type=rot_type, status=TextStatus.ENCRYPTED
+        )
         self._buffer.add(result)
         return result
 
     def decrypt(self, text: str, rot_type: RotType) -> Text:
         cipher = self._ciphers.get(rot_type)
         decrypted_text = cipher.decrypt(text)
-        result = Text(text=decrypted_text, rot_type=rot_type, status=TextStatus.DECRYPTED)
+        result = Text(
+            text=decrypted_text, rot_type=rot_type, status=TextStatus.DECRYPTED
+        )
         self._buffer.add(result)
         return result
 

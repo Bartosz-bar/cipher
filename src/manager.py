@@ -2,10 +2,13 @@ from src.cipher_facade import CipherFacade
 from src.cipher_factory import CipherFactory
 from src.models import RotType
 
+
 class Manager:
     def __init__(self, buffer, file_handler) -> None:
         ciphers = CipherFactory.create_all()
-        self._facade = CipherFacade(ciphers=ciphers, buffer=buffer, file_handler=file_handler)
+        self._facade = CipherFacade(
+            ciphers=ciphers, buffer=buffer, file_handler=file_handler
+        )
 
     def run(self) -> None:
         print("Welcome to CIPHER!")
